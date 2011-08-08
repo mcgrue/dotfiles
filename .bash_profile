@@ -59,8 +59,8 @@ function git_rev_head
 {
     local rev_prompt_token=" » " rev=1 sym=0 colors=() branches=()
 
-    branches[$rev]=$(git name-rev --name-only head 2> /dev/null)
-    branches[$sym]=$(git symbolic-ref -q head 2> /dev/null)
+    branches[$rev]=$(git name-rev --name-only HEAD 2> /dev/null)
+    branches[$sym]=$(git symbolic-ref -q HEAD 2> /dev/null)
     branches[$sym]=${branches[$sym]##refs/heads/}
 
     if [[ ${#branches} -gt 0 ]]; then
@@ -107,7 +107,7 @@ function set_prompt
         esac
     done
 
-    export PS1="\u@\h:\W \$(git_rev_head)${separator}${prompt_char} "
+    export PS1="\u@\h:\W $(git_rev_head)${separator}${prompt_char} "
 }
 
 
