@@ -4,3 +4,4 @@ set smartindent
 set nocompatible
 set nohls
 set number
+set expandtab
