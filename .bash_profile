@@ -31,7 +31,7 @@ fif ()
 	# Disable filename expansion (globbing), so *.filetype gets passed directly
 	# to find.
 	set -f
-	find "$DIR" '(' $FIND_ARGS ')' -exec grep -i -H -n -e "$EXPRESSION" '{}' ';'
+        find "$DIR" '(' $FIND_ARGS ')' -exec grep --color -i -H -n -e "$EXPRESSION" '{}' '+'
 }
 
 ##
