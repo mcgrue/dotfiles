@@ -11,3 +11,9 @@ set expandtab
 
 
 syntax on
+
+"strip trailing whitespace
+nnoremap  <silent> <leader>ss m`:%s/\s\s*$//e<CR>``
+
+"highlight whitespace
+set list listchars=tab:>-,trail:.,extends:>,precedes:<
