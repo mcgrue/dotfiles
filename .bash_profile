@@ -7,30 +7,30 @@ export EDITOR="vim"
 
 fif ()
 {
-	DIR="$1"
-	FTYPES="$2"
-	EXPRESSION="$3"
+    DIR="$1"
+    FTYPES="$2"
+    EXPRESSION="$3"
 
-	if [ -z "$DIR" -o -z "$FTYPES" -o -z "$EXPRESSION" ]
-	then
-		echo "Usage: $0 directory filetype[,...] expression"
-		return 1
-	fi
+    if [ -z "$DIR" -o -z "$FTYPES" -o -z "$EXPRESSION" ]
+    then
+        echo "Usage: $0 directory filetype[,...] expression"
+        return 1
+    fi
 
-	FIND_ARGS=
-	for FTYPE in $(echo "$FTYPES" | sed -e 's|,| |g')
-	do
-		if [ -z "$FIND_ARGS" ]
-		then
-			FIND_ARGS="-iname *.$FTYPE"
-		else
-			FIND_ARGS="$FIND_ARGS -o -iname *.$FTYPE"
-		fi
-	done
+    FIND_ARGS=
+    for FTYPE in $(echo "$FTYPES" | sed -e 's|,| |g')
+    do
+        if [ -z "$FIND_ARGS" ]
+        then
+            FIND_ARGS="-iname *.$FTYPE"
+        else
+            FIND_ARGS="$FIND_ARGS -o -iname *.$FTYPE"
+        fi
+    done
 
-	# Disable filename expansion (globbing), so *.filetype gets passed directly
-	# to find.
-	set -f
+    # Disable filename expansion (globbing), so *.filetype gets passed directly
+    # to find.
+    set -f
         find "$DIR" '(' $FIND_ARGS ')' -exec grep --color -i -H -n -e "$EXPRESSION" '{}' '+'
 }
 
@@ -78,7 +78,7 @@ function git_rev_head
         rev_prompt="${colors[$rev]}${branches[$rev]}${reset}${rev_prompt_token}"
         
         if [ "${branches[$sym]}" = "${branches[$rev]}" ]; then rev_prompt=""; fi
-        echo "(${rev_prompt}${sym_prompt})"
+        git_output="(${rev_prompt}${sym_prompt})"
     fi
 }
 
@@ -108,11 +108,12 @@ function set_prompt
         esac
     done
 
-    export PS1="\u@\h:\W $(git_rev_head)${separator}${prompt_char} "
+    export PS1="\u@\h:$blue_text\]\$PWD$reset\] ${separator}\$git_output\n${prompt_char} "
 }
 
-
+PROMPT_COMMAND="git_rev_head; $PROMPT_COMMAND";
 set_prompt --prompt ∵
+
 
 ##
 ## end git branch thing.
